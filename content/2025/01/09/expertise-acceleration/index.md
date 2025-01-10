@@ -1,14 +1,17 @@
 ---
 title: "Expertise Acceleration"
-source: "https://commoncog.com/expertise/"
-author:
-  - "[[Cedric Chin]]"
-published: 2023-10-13
-created: 2025-01-10
-description: "Expertise deep dives for practitioners: effective practice methods, useful theories of expertise, and how to get better faster."
-tags:
-  - "clippings"
+date: 2025-01-09T23:59:23+08:00
+updated: 2025-01-09T23:59:23+08:00
+taxonomies:
+  tags: []
+extra:
+  source: https://commoncog.com/expertise/
+  hostname: www.lennysnewsletter.com
+  author: Cedric Chin
+  original_title: "Expertise Acceleration"
+  original_lang: en
 ---
+
 > Commoncog 专注于加速专业知识获取的方法，主要探讨了三种途径：1) **刻意练习（Deliberate Practice, DP）**，由 K. Anders Ericsson 提出，强调通过特定类型的练习加速技能获取，但设计有效的 DP 练习需要大量时间和资源；2) **自然主义决策方法（Naturalistic Decision Making, NDM）**，通过提取现实世界专家的隐性知识来构建培训方法，适用于无法设计 DP 练习的领域； 3) **试错法**，探讨专家如何通过反复试验和错误积累经验，尤其是在没有现成 DP 练习的领域中。Commoncog 还强调，研究结果的应用需要结合具体背景，并通过实践验证其有效性。文章还推荐了相关书籍和实验，如《Peak》和柔道加速实验，帮助读者更好地理解这些方法。
 
 ## What actually works to accelerate expertise acquisition?  

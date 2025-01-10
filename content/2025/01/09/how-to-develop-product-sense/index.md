@@ -12,13 +12,13 @@ extra:
   original_lang: en
 ---
 
-_👋 Hey, [Lenny](https://twitter.com/lennysan) here! Welcome to a ✨ **monthly free edition** ✨ of my weekly newsletter. Each week I tackle reader questions about building product, driving growth, working with humans, and anything else that’s stressing you out about work.  
+👋 Hey, [Lenny](https://twitter.com/lennysan) here! Welcome to a ✨ **monthly free edition** ✨ of my weekly newsletter. Each week I tackle reader questions about building product, driving growth, working with humans, and anything else that’s stressing you out about work.  
 
-嗨，Lenny 在这里！欢迎来到我每周通讯的✨免费版✨。每周我都会解答读者关于构建产品、推动增长、与人合作以及任何让你在工作中感到压力的问题。_
+嗨，Lenny 在这里！欢迎来到我每周通讯的✨免费版✨。每周我都会解答读者关于构建产品、推动增长、与人合作以及任何让你在工作中感到压力的问题。
 
-_If you’re not a subscriber, here’s what you missed this month:  
+If you’re not a subscriber, here’s what you missed this month:  
 
-如果您不是订阅者，以下是您这个月错过的内容：_
+如果您不是订阅者，以下是您这个月错过的内容
 
 1.  [Freemium vs. trial  免费增值模式与试用模式](https://www.lennysnewsletter.com/p/freemium-trials-free?s=w)
     
@@ -39,13 +39,13 @@ To help you build your product sense, I’ve asked [Jules Walter](https://www.li
 
 为了帮助您建立产品感，我邀请了 Slack 和 YouTube 的资深产品经理 Jules Walter，他也是更广泛的产品经理社区中的杰出领导者，与我们分享他辛勤积累的智慧。下面，Jules 揭示了产品感的神秘面纱。他分享了许多可操作和实用的建议来培养您的产品感，解释了什么是产品感，如何知道自己在进步，并深入探讨了四种具体的方法来培养这项技能，并附带了他自己的许多经验案例。享受吧！
 
-_You can follow Jules on [Twitter](https://twitter.com/julesdwalt) and [LinkedIn](https://www.linkedin.com/in/juleswalter).  
+You can follow Jules on [Twitter](https://twitter.com/julesdwalt) and [LinkedIn](https://www.linkedin.com/in/juleswalter).  
 
-您可以在 Twitter 和 LinkedIn 上关注 Jules。_
+您可以在 Twitter 和 LinkedIn 上关注 Jules。
 
-_P.S. You can now hear this post in audio form 👇  
+P.S. You can now hear this post in audio form 👇  
 
-P.S. 您现在可以以音频形式收听这篇帖子 👇_
+P.S. 您现在可以以音频形式收听这篇帖子 👇
 
 [![](https3A2F2Fbucketeer-e05bbc84-baa3-437e-9518-adb32be77984.s3.amazonaws.com2Fpublic2Fimages2F024a1841-c38d-447c-8f10-f0b5f7e7ede2_1456x240.png)](https://www.audyo.ai/p/sawk7otg98dA)
 
@@ -439,11 +439,11 @@ I hope you decide to invest in developing your product sense, and that the pract
     《日常事物设计入门：Don Norman 教授的为期两周的设计原则应用课程》
     
 
-_Thanks to Lenny for the opportunity to contribute to this newsletter. And thanks to others who’ve shared thoughts or feedback for this article, including Courtney Lessard, Bangaly Kaba, Camille Edwards, David Lieb, Erin Teague, Lawrence Ripsher, Todd Sherman, and Shreyas Doshi.  
+Thanks to Lenny for the opportunity to contribute to this newsletter. And thanks to others who’ve shared thoughts or feedback for this article, including Courtney Lessard, Bangaly Kaba, Camille Edwards, David Lieb, Erin Teague, Lawrence Ripsher, Todd Sherman, and Shreyas Doshi.  
 
 感谢 Lenny 提供这次为这份通讯投稿的机会。还要感谢其他为此篇文章分享想法或反馈的人，包括 Courtney Lessard、Bangaly Kaba、Camille Edwards、David Lieb、Erin Teague、Lawrence Ripsher、Todd Sherman 和 Shreyas Doshi。_
 
-_For more, follow Jules on [Twitter](https://twitter.com/julesdwalt) and [LinkedIn](https://www.linkedin.com/in/juleswalter).  
+For more, follow Jules on [Twitter](https://twitter.com/julesdwalt) and [LinkedIn](https://www.linkedin.com/in/juleswalter).  
 
 更多内容，请关注 Jules 的 Twitter 和 LinkedIn。_
 
@@ -496,13 +496,13 @@ _For more, follow Jules on [Twitter](https://twitter.com/julesdwalt) and [Linked
     誓言护理：用户体验设计师（远程-美国）
     
 
-_Browse more open roles, or add your own, at [Lenny’s Job Board](https://lennysnewsletter.com/jobs).  
+Browse more open roles, or add your own, at [Lenny’s Job Board](https://lennysnewsletter.com/jobs).  
 
 浏览更多开放职位，或在 Lenny 的招聘板上添加您自己的职位。_
 
-**If you’re finding this newsletter valuable, consider sharing it with friends, or subscribing if you haven’t already.  
+If you’re finding this newsletter valuable, consider sharing it with friends, or subscribing if you haven’t already.  
 
-如果您觉得这份通讯有价值，请考虑与朋友分享，或者如果您还没有的话，订阅它。**
+如果您觉得这份通讯有价值，请考虑与朋友分享，或者如果您还没有的话，订阅它。
 
 Sincerely,  诚挚地
 
