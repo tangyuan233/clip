@@ -97,10 +97,10 @@ def process_markdown_file(file_path: Path):
         f"{post.content}"
     )
     
-    Write back to the file
+    # Write back to the file
     with open(file_path, 'w', encoding='utf-8') as f:
         f.write(updated_content)
-    print(f"Updated file: {file_path}")
+    # print(f"Updated file: {file_path}")
 
 # Function to process all Markdown files in a directory
 def process_markdown_files(base_dir: str):
