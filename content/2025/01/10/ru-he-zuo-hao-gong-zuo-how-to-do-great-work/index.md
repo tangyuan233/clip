@@ -11,7 +11,7 @@ extra:
   original_title: "How to Do Great Work"
   original_lang: en
 ---
-![How to Do Great Work](how-to-do-great-work-2.gif)July 2023  2023 年 7 月
+July 2023  2023 年 7 月
 
 If you collected lists of techniques for doing great work in a lot of different fields, what would the intersection look like? I decided to find out by making it.
 
