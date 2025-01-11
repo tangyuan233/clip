@@ -1,5 +1,6 @@
 ---
 title: "小红书的造梦都市"
+original_title: "小红书的造梦都市"
 source: "https://hanyang.wtf/p/354"
 author:
   - "[[汉洋 MasterPa]]"
