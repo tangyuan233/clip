@@ -1,17 +1,17 @@
 ---
 title: "How to Do Great Work"
-date: 2025-01-10T23:27:02
-updated: 2025-01-10T23:27:02
+date: 2025-01-11T21:30:40+08:00
+updated: 2025-01-11T21:30:40+08:00
 taxonomies:
   tags: []
 extra:
   source: https://paulgraham.com/greatwork.html
   hostname: paulgraham.com
-  author: 
+  author: Paul Graham
   original_title: "How to Do Great Work"
   original_lang: en
 ---
-![How to Do Great Work](how-to-do-great-work-2.gif)July 2023  2023 年 7 月
+July 2023  2023 年 7 月
 
 If you collected lists of techniques for doing great work in a lot of different fields, what would the intersection look like? I decided to find out by making it.
 
