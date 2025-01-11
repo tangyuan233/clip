@@ -8,7 +8,7 @@ extra:
   source: https://paulgraham.com/greatwork.html
   hostname: paulgraham.com
   author: Paul Graham
-  original_title: "How to Do Great Work"
+  original_title: "如何做好工作 --- How to Do Great Work"
   original_lang: en
 ---
 July 2023  2023 年 7 月
