@@ -1,30 +1,17 @@
 ---
-title: How to Do Great Work
-date: '2025-01-10 23:27:02'
-updated: '2025-01-10 23:27:02'
+title: "How to Do Great Work"
+date: 2025-01-10T23:27:02
+updated: 2025-01-10T23:27:02
 taxonomies:
   tags: []
 extra:
   source: https://paulgraham.com/greatwork.html
   hostname: paulgraham.com
-  author: null
-  original_title: How to Do Great Work
+  author: 
+  original_title: "How to Do Great Work"
   original_lang: en
 ---
-
-> **摘要**：  
-> 文章探讨了如何在不同领域中做出杰出工作的共同点，并提出了一个四步框架：选择领域、学习到知识前沿、发现空白、探索有潜力的方向。作者强调，好奇心是推动伟大工作的核心动力，兴趣和努力同样重要。文章还讨论了如何通过不断尝试、保持好奇心、避免拖延和过度规划来找到适合自己的工作方向，并指出伟大工作往往源于对问题的深入探索和坚持不懈的努力。
-> 
-> **要点总结**：  
-> 1. **选择领域**：找到你既有天赋又感兴趣的工作，兴趣是推动你深入探索的关键。  
-> 2. **学习到知识前沿**：通过不断学习，达到某个领域的前沿，发现其中的空白和未解决的问题。  
-> 3. **发现并探索空白**：通过好奇心和对问题的敏感，发现知识中的空白，并大胆探索这些有潜力的方向。  
-> 4. **保持好奇心和努力**：好奇心是伟大工作的引擎，兴趣和努力相结合，能够推动你不断前进，克服困难。  
-> 5. **避免过度规划和拖延**：伟大工作往往源于不断尝试和迭代，而不是过度规划或长期拖延。
-
----
-
-July 2023  2023 年 7 月
+![How to Do Great Work](how-to-do-great-work-2.gif)July 2023  2023 年 7 月
 
 If you collected lists of techniques for doing great work in a lot of different fields, what would the intersection look like? I decided to find out by making it.
 
