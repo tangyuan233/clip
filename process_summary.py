@@ -1,16 +1,31 @@
 import os
+import re
 from pathlib import Path
 from openai import OpenAI
 import frontmatter
 import yaml
 from datetime import datetime
+import urllib.request
+import unicodedata
+import slugify
+import shutil
+from pathlib import Path
+
 
 # Configuration
-BASE_DIR = "content"
+BASE_DIR = Path("content")
+INBOX_DIR = "inbox"
 client = OpenAI(
-    api_key=os.getenv("DEEPSEEK_API_KEY"),  # 从环境变量中获取 API 密钥 
+    api_key='sk-1b625fdf06dc404bb98477dadd29c469',  # 从环境变量中获取 API 密钥 
     base_url="https://api.deepseek.com"    # DeepSeek API base url
 )
+
+# Function to check if a string contains Chinese characters
+def is_chinese(title):
+    for char in title:
+        if '一' <= char <= '\u9fff':  # Basic range for Chinese characters
+            return True
+    return False
 
 # Function to serialize datetime objects
 def serialize_datetime(obj):
@@ -22,6 +37,10 @@ def serialize_datetime(obj):
         return obj.strftime('%Y-%m-%d %H:%M:%S')
     else:
         return obj
+
+# Function to create slug from title
+def create_slug(title):
+    return slugify.slugify(title, separator="-", lowercase=True)
 
 # Function to generate summary and key points
 def generate_summary_and_points(content: str) -> str:
@@ -67,6 +86,44 @@ def generate_summary_and_points(content: str) -> str:
     )
     return response.choices[0].message.content
 
+# Function to process YAML metadata
+def process_metadata(metadata):
+    date = datetime.strptime(metadata['date'], '%Y-%m-%dT%H:%M:%S%z')
+    slug = create_slug(metadata['title'])
+    
+    new_metadata = {
+        'title': metadata['title'],
+        'date': metadata['date'],
+        'updated': metadata['updated'],
+        'taxonomies': {
+            'tags': metadata.get('tags', [])
+        },
+        'extra': {
+            'source': metadata.get('source', ''),
+            'hostname': metadata.get('hostname', ''),
+            'author': metadata.get('author', ''),
+            'original_title': metadata.get('original_title', metadata['title']),
+            'original_lang': 'zh' if is_chinese(metadata['title']) else 'en'
+        }
+    }
+    return new_metadata
+
+# Function to download images and update markdown references
+def download_images_and_update_refs(content, folder_path):
+    pattern = r'!\[(.*?)\]\((.*?)\)'
+    def replace_image(match):
+        desc, url = match.groups()
+        filename = url.split('/')[-1]  # Assuming filename is the last part of the URL
+        local_path = folder_path / filename
+        try:
+            urllib.request.urlretrieve(url, local_path)
+            return f'![{desc}]({filename})'
+        except Exception as e:
+            print(f"Failed to download image {url}: {e}")
+            return match.group(0)  # Return original if download fails
+    
+    return re.sub(pattern, replace_image, content)
+
 # Function to process a single Markdown file
 def process_markdown_file(file_path: Path):
     with open(file_path, 'r', encoding='utf-8') as f:
@@ -74,42 +131,53 @@ def process_markdown_file(file_path: Path):
     
     content = post.content.strip()
     
-    # Check if content already contains the summary blockquote
-    if content.startswith("> **摘要**：") and "> **要点总结**：" in content:
-        print(f"File already contains summary and key points, skipping: {file_path}")
-        return
-    
-    # Serialize metadata
-    metadata_serialized = serialize_datetime(post.metadata)
-    yaml_frontmatter = yaml.dump(metadata_serialized, allow_unicode=True, sort_keys=False)
-    
-    # Generate summary and key points
-    summary_and_points = generate_summary_and_points(post.content)
-    print(f"Generated summary and key points for: {file_path}")
-    
-    # Format summary and key points as blockquote
-    blockquote_summary_and_points = "\n".join([f"> {line}" for line in summary_and_points.split("\n")])
-    
-    # Reconstruct the file content
-    updated_content = (
-        f"---\n{yaml_frontmatter.strip()}\n---\n\n"
-        f"{blockquote_summary_and_points}\n\n---\n\n"
-        f"{post.content}"
-    )
-    
-    # Write back to the file
-    with open(file_path, 'w', encoding='utf-8') as f:
-        f.write(updated_content)
-    # print(f"Updated file: {file_path}")
+    # Check if this file should be processed (new or updated)
+    existing_files = list(Path(BASE_DIR).rglob("index.md"))
+    for existing_file in existing_files:
+        with open(existing_file, 'r', encoding='utf-8') as ef:
+            existing_post = frontmatter.load(ef)
+            if existing_post.get('title') == post.get('title') and existing_post.get('author') == post.get('author'):
+                print(f"Skipping file as it already exists with same title and author: {file_path}")
+                return
 
-# Function to process all Markdown files in a directory
-def process_markdown_files(base_dir: str):
-    for root, _, files in os.walk(base_dir):
-        for file in files:
-            if file.endswith(".md"):
-                file_path = Path(root) / file
-                process_markdown_file(file_path)
+    # Process metadata
+    new_metadata = process_metadata(post.metadata)
+    yaml_frontmatter = yaml.dump(new_metadata, allow_unicode=True, sort_keys=False)
+
+    # Create new folder structure
+    date = datetime.strptime(new_metadata['date'], '%Y-%m-%dT%H:%M:%S+08:00')
+    # print(create_slug(new_metadata['title']))
+    new_folder = BASE_DIR/f"{date.year}/{date.strftime('%m')}/{date.strftime('%d')}/{create_slug(new_metadata['title'])}"
+    new_folder.mkdir(parents=True, exist_ok=True)
+
+    # Move and rename the file
+    new_file_path = new_folder / "index.md"
+    # shutil.move(str(file_path), str(new_file_path))
+    shutil.copy2(str(file_path), str(new_file_path))  # Use copy2 to maintain metadata
+
+    # Generate summary and key points
+    summary_and_points = generate_summary_and_points(content)
+
+    # Download images and update references
+    with open(new_file_path, 'r+', encoding='utf-8') as f:
+        content = f.read()
+        # Split content into YAML and the rest
+        parts = content.split('---', 2)
+        if len(parts) > 2:
+            # Remove the original YAML, keep only the content part
+            content_without_yaml = parts[2]
+        else:
+            content_without_yaml = content  # If no YAML was found, use the whole content
+        new_content = download_images_and_update_refs(content_without_yaml, new_folder)
+        f.seek(0)
+        f.write(f"---\n{yaml_frontmatter}---\n\n{summary_and_points}\n\n{new_content}")
+        f.truncate()
+
+# Function to process all Markdown files in the inbox
+def process_markdown_files():
+    for file in Path(INBOX_DIR).glob("*.md"):
+        process_markdown_file(file)
 
 # Main execution
 if __name__ == "__main__":
-    process_markdown_files(BASE_DIR)
+    process_markdown_files()
