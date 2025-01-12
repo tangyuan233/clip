@@ -3,7 +3,7 @@ name: Process Markdown Files
 on:
   schedule:
     - cron: '0 0 * * *'  # 每天午夜运行
-  # workflow_dispatch:
+  workflow_dispatch:
 
 jobs:
   process-markdown:
@@ -36,7 +36,7 @@ jobs:
       - name: Commit and Push changes
         run: |
           git add .
-          git commit -m "Auto-summarize new files"
+          git commit -m "Auto-summarize markdown files"
           git push
         env:
           # 使用 GitHub 提供的令牌进行身份验证
