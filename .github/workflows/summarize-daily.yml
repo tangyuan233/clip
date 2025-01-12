@@ -34,7 +34,6 @@ jobs:
           git config --global user.email "github-actions[bot]@users.noreply.github.com"
       
       - name: Commit and Push changes
-        if: ${{ steps.check_changes.outputs.changes == 'true' }}
         run: |
           git add .
           git commit -m "Auto-summarize new files"
