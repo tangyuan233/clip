@@ -149,7 +149,8 @@ def process_markdown_file(file_path: Path):
     yaml_frontmatter = yaml.dump(new_metadata, allow_unicode=True, sort_keys=False)
 
     # Create new folder structure
-    # date = datetime.datetime.strptime(new_metadata['date'], '%Y-%m-%dT%H:%M:%S+08:00')
+    # print(isinstance(new_metadata['date'],datetime))
+    # date = new_metadata['date'].strftime('%Y-%m-%dT%H:%M:%S+08:00')
     # date = datetime.strptime(new_metadata['date'], '%Y-%m-%dT%H:%M:%S+08:00')
     # date = new_metadata['date'].strftime('%Y-%m-%dT%H:%M:%S%z')
     date = new_metadata['date']
