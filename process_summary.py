@@ -149,10 +149,12 @@ def process_markdown_file(file_path: Path):
     yaml_frontmatter = yaml.dump(new_metadata, allow_unicode=True, sort_keys=False)
 
     # Create new folder structure
+    # date = datetime.datetime.strptime(new_metadata['date'], '%Y-%m-%dT%H:%M:%S+08:00')
+    # date = datetime.strptime(new_metadata['date'], '%Y-%m-%dT%H:%M:%S+08:00')
+    # date = new_metadata['date'].strftime('%Y-%m-%dT%H:%M:%S%z')
     date = new_metadata['date']
     # print(create_slug(new_metadata['title']))
-    year, month, day = date[:10].split('-')
-    new_folder = BASE_DIR / f"{year}/{month}/{day}/{create_slug(new_metadata['title'])}"
+    new_folder = BASE_DIR/f"{date[0:4]}/{date[5:7]}/{date[8:10]}/{create_slug(new_metadata['title'])}"
     new_folder.mkdir(parents=True, exist_ok=True)
 
     # Move and rename the file
