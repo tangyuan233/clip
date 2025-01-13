@@ -1,6 +1,5 @@
 import os
 import re
-from pathlib import Path
 from openai import OpenAI
 import frontmatter
 import yaml
