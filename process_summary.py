@@ -3,7 +3,7 @@ import re
 from openai import OpenAI
 import frontmatter
 import yaml
-from datetime import datetime
+import datetime
 import urllib.request
 import unicodedata
 import slugify
