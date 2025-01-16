@@ -180,7 +180,7 @@ def process_markdown_file(file_path: Path):
             content_without_yaml = content  # If no YAML was found, use the whole content
         new_content = download_images_and_update_refs(content_without_yaml, new_folder)
         f.seek(0)
-        f.write(f"---\n{yaml_frontmatter}---\n\n{summary_and_points}---\n\n{new_content}")
+        f.write(f"---\n{yaml_frontmatter}---\n\n{summary_and_points}\n\n---\n\n{new_content}")
         f.truncate()
 
 # Function to process all Markdown files in the inbox
