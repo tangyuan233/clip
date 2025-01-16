@@ -1,7 +1,7 @@
 ---
 title: "How WhatsApp ate the world"
-date: 2025-01-15T19:28:25+08:00
-updated: 2024-12-09T19:29:08+08:00
+date: "2025-01-15T19:28:25+08:00"
+updated: "2024-12-09T19:29:08+08:00"
 tags:
 source: "https://restofworld.org/2024/how-whatsapp-for-business-changed-the-world/?utm_source=rss&utm_medium=rss&utm_campaign=feeds"
 hostname: "restofworld.org"

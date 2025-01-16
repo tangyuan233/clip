@@ -1,7 +1,7 @@
 ---
 title: "The era of thinking about thinking"
-date: 2025-01-15T18:48:21+08:00
-updated: 2024-11-30T08:00:00+08:00
+date: "2025-01-15T18:48:21+08:00"
+updated: "2024-11-30T08:00:00+08:00"
 tags:
 source: "https://benchugg.com/writing/thinking_about_thinking/"
 hostname: "benchugg.com"
