@@ -12,15 +12,15 @@ extra:
   original_lang: en
 ---
 
-**摘要**：
-Shivika Sabharwal是一位陶瓷艺术家，她在WhatsApp的商业峰会上分享了如何通过WhatsApp Business应用扩展她的陶艺业务。WhatsApp作为全球最广泛使用的即时通讯应用，拥有20亿日活跃用户，Meta正致力于将其打造成一个全方位的商业平台。通过免费和付费的商业工具，WhatsApp帮助全球企业，尤其是印度、巴西等地的中小企业，实现客户沟通、销售和服务。尽管WhatsApp在隐私和简洁性上曾是其核心竞争力，但随着Meta的商业化推进，WhatsApp逐渐增加了广告和AI功能，试图在保持用户隐私的同时，吸引更多企业用户并增加收入。
+> **摘要：**  
+> WhatsApp作为全球最广泛使用的即时通讯应用，拥有20亿日活跃用户，每天发送1000亿条消息。Meta（WhatsApp的母公司）正致力于将其从单纯的通讯工具转变为“全能应用”，特别是在印度、巴西等市场，WhatsApp已成为企业进行客户服务、销售和交易的重要平台。通过推出WhatsApp Business应用和AI驱动的聊天机器人，Meta帮助企业扩大客户基础并提高效率。尽管WhatsApp的创始团队曾坚决反对广告，但Meta正在探索通过企业服务和潜在广告来盈利。然而，如何在扩展功能的同时保持应用的简洁性和隐私性，是Meta面临的主要挑战。
 
-**要点总结**：
-1. **WhatsApp的商业化转型**：Meta通过WhatsApp Business应用和付费API，帮助全球企业，尤其是中小企业，实现客户沟通和销售增长。
-2. **全球市场的成功案例**：印度、巴西等地的企业通过WhatsApp实现了业务扩展，如陶艺教学、保险服务、银行交易等。
-3. **隐私与商业化的平衡**：WhatsApp在保持端到端加密的同时，逐步引入广告和AI功能，试图在不牺牲隐私的前提下增加收入。
-4. **AI驱动的商业工具**：Meta正在通过AI技术提升WhatsApp的商业功能，如自动回复、个性化广告等，帮助企业提高效率。
-5. **未来的挑战与机遇**：WhatsApp需要在保持简洁性和隐私的同时，继续扩展其商业功能，尤其是在美国等新市场的增长潜力。
+> **要点总结：**
+> 1. WhatsApp已成为全球最广泛使用的即时通讯应用，Meta计划将其从通讯工具扩展为多功能平台，特别是在印度、巴西等新兴市场。
+> 2. 通过WhatsApp Business应用和AI聊天机器人，Meta帮助企业提升客户服务和销售效率，推动企业通过WhatsApp进行交易和营销。
+> 3. WhatsApp的创始团队曾坚决反对广告，但Meta正在探索通过企业服务和潜在广告来盈利，尽管目前WhatsApp的盈利规模相对较小。
+> 4. Meta面临的主要挑战是如何在扩展WhatsApp功能的同时，保持其简洁性和隐私性，避免用户流失。
+> 5. WhatsApp在美国市场的增长为Meta提供了新的盈利机会，尽管其目前对Meta整体收入的贡献仍然有限。---
 
 
 Shivika Sabharwal’s nerves kicked in the second she spotted the size of the crowd. It was mid-September, and Sabharwal was standing center stage inside a massive event space at Mumbai’s extravagant Jio World Convention Centre. The space, which had recently hosted the star-studded wedding between billionaire heirs Anant Ambani and Radhika Merchant, had been transformed into a sea of green — green spotlights, green archways, a neon-green light display — in honor of WhatsApp’s first business summit in India.
