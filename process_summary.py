@@ -16,7 +16,7 @@ from pathlib import Path
 BASE_DIR = Path("content")
 INBOX_DIR = "inbox/48 Clippings"
 client = OpenAI(
-    api_key= '${{ secrets.DEEPSEEK_API_KEY }}',  # 从环境变量中获取 API 密钥 
+    api_key= os.environ.get('DEEPSEEK_API_KEY'),  # 从环境变量中获取 API 密钥 
     base_url="https://api.deepseek.com"    # DeepSeek API base url
 )
 
