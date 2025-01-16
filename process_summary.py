@@ -64,16 +64,17 @@ def generate_summary_and_points(content: str) -> str:
     - 所有输出用中文生成。
     - 文章内容里的"我"是文章的原作者，不要代入 Vandee 的身份。
     - 按照outputformat指定的格式输出最终内容。
-    - “摘要”和“要点总结”只需要按照markdown格式加粗，不要用标题格式。
+    - “摘要”和“要点总结”使用Markdown callout语法。
     - 最终生成的内容只包括“摘要”和“要点总结”两个部分，“要点总结”部分严格按照有序列表生成。
     - 不要在“摘要”和“要点总结”的部分之外增加额外的总结和你的想法。
     - “摘要”的内容不要分段，保持一个段落。
 
     ## OutputFormat:
-    **摘要**：
-    {摘要}
-    **要点总结**：
-    {要点总结}
+    > **摘要：**
+    > {摘要}  
+    >
+    > **要点总结：**
+    > {要点总结}
     """
     
     response = client.chat.completions.create(
@@ -178,7 +179,7 @@ def process_markdown_file(file_path: Path):
             content_without_yaml = content  # If no YAML was found, use the whole content
         new_content = download_images_and_update_refs(content_without_yaml, new_folder)
         f.seek(0)
-        f.write(f"---\n{yaml_frontmatter}---\n\n{summary_and_points}\n\n{new_content}")
+        f.write(f"---\n{yaml_frontmatter}---\n\n{summary_and_points}---\n\n{new_content}")
         f.truncate()
 
 # Function to process all Markdown files in the inbox
