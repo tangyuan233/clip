@@ -71,7 +71,7 @@ def generate_summary_and_points(content: str) -> str:
 
     ## OutputFormat:
     > **摘要**:
-    > {摘要}  
+    > {摘要}
     > 
     > **要点总结**:
     > {要点总结}
