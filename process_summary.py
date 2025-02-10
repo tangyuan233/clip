@@ -1,6 +1,6 @@
 import os
 import re
-from openai import OpenAI
+import openai  # 使用 OpenAI 官方库
 import frontmatter
 import yaml
 import datetime
@@ -11,19 +11,15 @@ import slugify
 import shutil
 from pathlib import Path
 
-
 # Configuration
 BASE_DIR = Path("content")
 INBOX_DIR = "inbox/48 Clippings"
-client = OpenAI(
-    api_key= os.environ.get('DEEPSEEK_API_KEY'),  # 从环境变量中获取 API 密钥 
-    base_url="https://api.deepseek.com"    # DeepSeek API base url
-)
+openai.api_key = os.environ.get('OPENAI_API_KEY')  # 从环境变量中获取 OpenAI API 密钥
 
 # Function to check if a string contains Chinese characters
 def is_chinese(title):
     for char in title:
-        if '一' <= char <= '\u9fff':  # Basic range for Chinese characters
+        if '一' <= char <= '\u9fff':  # 基本的中文字符范围判断
             return True
     return False
 
@@ -42,7 +38,7 @@ def serialize_datetime(obj):
 def create_slug(title):
     return slugify.slugify(title, separator="-", lowercase=True)
 
-# Function to generate summary and key points
+# Function to generate summary and key points using OpenAI's model
 def generate_summary_and_points(content: str) -> str:
     prompt = """
     ## Goals:
@@ -75,31 +71,21 @@ def generate_summary_and_points(content: str) -> str:
     > 
     > **要点总结**:
     > {要点总结}
-
     """
     
-    response = client.chat.completions.create(
-        model="deepseek-chat",
+    response = openai.ChatCompletion.create(
+        model="pt-4o-mini",  # 使用 OpenAI 官方模型
         messages=[
             {"role": "system", "content": "You are an excellent assistant generating article summaries."},
             {"role": "user", "content": f"{prompt}\n\nArticle content:\n{content}"},
         ],
         stream=False,
     )
-    print("API 返回的完整响应：", response)
-    # 如果响应对象有 status_code 属性，也一并打印（有些封装后的对象可能不包含）
-    if hasattr(response, "status_code"):
-        print("HTTP 状态码：", response.status_code)
-    print(response.choices[0].message.content)
     return response.choices[0].message.content
 
 # Function to process YAML metadata
 def process_metadata(metadata):
-    # print(isinstance(metadata['date'], datetime))
     date = metadata['date']
-    # date = datetime.strptime(metadata['date'], '%Y-%m-%dT%H:%M:%S%z')
-    # date = datetime.datetime.strptime(metadata['date'], '%Y-%m-%dT%H:%M:%S%z')
-    # date = metadata['date'].strftime('%Y-%m-%dT%H:%M:%S%z')
     slug = create_slug(metadata['title'])
     
     new_metadata = {
@@ -124,14 +110,14 @@ def download_images_and_update_refs(content, folder_path):
     pattern = r'!\[(.*?)\]\((.*?)\)'
     def replace_image(match):
         desc, url = match.groups()
-        filename = url.split('/')[-1]  # Assuming filename is the last part of the URL
+        filename = url.split('/')[-1]  # 假设文件名为 URL 的最后一部分
         local_path = folder_path / filename
         try:
             urllib.request.urlretrieve(url, local_path)
             return f'![{desc}]({filename})'
         except Exception as e:
             print(f"Failed to download image {url}: {e}")
-            return match.group(0)  # Return original if download fails
+            return match.group(0)  # 下载失败时返回原始内容
     
     return re.sub(pattern, replace_image, content)
 
@@ -142,7 +128,7 @@ def process_markdown_file(file_path: Path):
     
     content = post.content.strip()
     
-    # Check if this file should be processed (new or updated)
+    # 检查文件是否已处理（标题和作者相同则跳过）
     existing_files = list(Path(BASE_DIR).rglob("index.md"))
     for existing_file in existing_files:
         with open(existing_file, 'r', encoding='utf-8') as ef:
@@ -151,39 +137,31 @@ def process_markdown_file(file_path: Path):
                 print(f"Skipping file as it already exists with same title and author: {file_path}")
                 return
 
-    # Process metadata
+    # 处理元数据
     new_metadata = process_metadata(post.metadata)
     yaml_frontmatter = yaml.dump(new_metadata, allow_unicode=True, sort_keys=False)
 
-    # Create new folder structure
-    # print(isinstance(new_metadata['date'],datetime))
-    # date = new_metadata['date'].strftime('%Y-%m-%dT%H:%M:%S+08:00')
-    # date = datetime.strptime(new_metadata['date'], '%Y-%m-%dT%H:%M:%S+08:00')
-    # date = new_metadata['date'].strftime('%Y-%m-%dT%H:%M:%S%z')
+    # 创建新的文件夹结构
     date = new_metadata['date']
-    # print(create_slug(new_metadata['title']))
-    new_folder = BASE_DIR/f"{date[0:4]}/{date[5:7]}/{date[8:10]}/{create_slug(new_metadata['title'])}"
+    new_folder = BASE_DIR / f"{date[0:4]}/{date[5:7]}/{date[8:10]}/{create_slug(new_metadata['title'])}"
     new_folder.mkdir(parents=True, exist_ok=True)
 
-    # Move and rename the file
+    # 移动并重命名文件
     new_file_path = new_folder / "index.md"
-    # shutil.move(str(file_path), str(new_file_path))
-    shutil.copy2(str(file_path), str(new_file_path))  # Use copy2 to maintain metadata
+    shutil.copy2(str(file_path), str(new_file_path))  # 使用 copy2 保持原有元数据
 
-    # Generate summary and key points
+    # 生成摘要和要点
     summary_and_points = generate_summary_and_points(content)
-    summary_and_points = summary_and_points.replace("\n", "\n> ").replace("> >",'> ')
+    summary_and_points = summary_and_points.replace("\n", "\n> ").replace("> >", '> ')
 
-    # Download images and update references
+    # 下载图片并更新 Markdown 中的引用
     with open(new_file_path, 'r+', encoding='utf-8') as f:
         content = f.read()
-        # Split content into YAML and the rest
         parts = content.split('---', 2)
         if len(parts) > 2:
-            # Remove the original YAML, keep only the content part
             content_without_yaml = parts[2]
         else:
-            content_without_yaml = content  # If no YAML was found, use the whole content
+            content_without_yaml = content
         new_content = download_images_and_update_refs(content_without_yaml, new_folder)
         f.seek(0)
         f.write(f"---\n{yaml_frontmatter}---\n\n{summary_and_points}\n\n---\n\n{new_content}")
