@@ -84,7 +84,7 @@ def generate_summary_and_points(content: str) -> str:
             {"role": "system", "content": "You are an excellent assistant generating article summaries."},
             {"role": "user", "content": f"{prompt}\n\nArticle content:\n{content}"},
         ],
-        stream=False,
+        # stream=False,
     )
     # 尝试打印返回的响应对象
     print("HTTP 状态码：", response.status_code)
