@@ -84,10 +84,13 @@ def generate_summary_and_points(content: str) -> str:
             {"role": "system", "content": "You are an excellent assistant generating article summaries."},
             {"role": "user", "content": f"{prompt}\n\nArticle content:\n{content}"},
         ],
-        # stream=False,
+        stream=False,
     )
-    # 尝试打印返回的响应对象
-    print("HTTP 状态码：", response.status_code)
+    print("API 返回的完整响应：", response)
+    # 如果响应对象有 status_code 属性，也一并打印（有些封装后的对象可能不包含）
+    if hasattr(response, "status_code"):
+        print("HTTP 状态码：", response.status_code)
+    print(response.choices[0].message.content)
     return response.choices[0].message.content
 
 # Function to process YAML metadata
