@@ -1,7 +1,6 @@
 import os
 import re
-import openai
-from openai import ChatCompletion  # 直接导入 ChatCompletion
+from openai import OpenAI # 使用 OpenAI 官方库
 import frontmatter
 import yaml
 import datetime
@@ -15,7 +14,7 @@ from pathlib import Path
 # Configuration
 BASE_DIR = Path("content")
 INBOX_DIR = "inbox/48 Clippings"
-openai.api_key = os.environ.get('OPENAI_API_KEY')  # 请确保环境变量中设置了 OPENAI_API_KEY
+openai.api_key = os.environ.get('OPENAI_API_KEY')  # 从环境变量中获取 OpenAI API 密钥
 
 # Function to check if a string contains Chinese characters
 def is_chinese(title):
@@ -73,14 +72,14 @@ def generate_summary_and_points(content: str) -> str:
     > **要点总结**:
     > {要点总结}
     """
-    
-    # 注意：此处直接调用从 openai 导入的 ChatCompletion.create
-    response = ChatCompletion.create(
-        model="gpt-4o-mini",  # 调用 OpenAI 官方模型
+
+    client = OpenAI()    
+    response = client.chat.completions.create(
+        model="gpt-4o-mini",  # 使用 OpenAI 官方模型
         messages=[
             {"role": "system", "content": "You are an excellent assistant generating article summaries."},
             {"role": "user", "content": f"{prompt}\n\nArticle content:\n{content}"},
-        ]
+        ],
     )
     return response.choices[0].message.content
 
@@ -118,7 +117,7 @@ def download_images_and_update_refs(content, folder_path):
             return f'![{desc}]({filename})'
         except Exception as e:
             print(f"Failed to download image {url}: {e}")
-            return match.group(0)
+            return match.group(0)  # 下载失败时返回原始内容
     
     return re.sub(pattern, replace_image, content)
 
@@ -129,7 +128,7 @@ def process_markdown_file(file_path: Path):
     
     content = post.content.strip()
     
-    # 检查文件是否已经处理（根据标题和作者判断）
+    # 检查文件是否已处理（标题和作者相同则跳过）
     existing_files = list(Path(BASE_DIR).rglob("index.md"))
     for existing_file in existing_files:
         with open(existing_file, 'r', encoding='utf-8') as ef:
@@ -149,7 +148,7 @@ def process_markdown_file(file_path: Path):
 
     # 移动并重命名文件
     new_file_path = new_folder / "index.md"
-    shutil.copy2(str(file_path), str(new_file_path))
+    shutil.copy2(str(file_path), str(new_file_path))  # 使用 copy2 保持原有元数据
 
     # 生成摘要和要点
     summary_and_points = generate_summary_and_points(content)
