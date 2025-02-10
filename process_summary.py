@@ -1,6 +1,6 @@
 import os
 import re
-from openai import OpenAI # 使用 OpenAI 官方库
+import openai  # 使用 OpenAI 官方库
 import frontmatter
 import yaml
 import datetime
@@ -72,14 +72,14 @@ def generate_summary_and_points(content: str) -> str:
     > **要点总结**:
     > {要点总结}
     """
-
-    client = OpenAI()    
-    response = client.chat.completions.create(
+    
+    response = openai.ChatCompletion.create(
         model="gpt-4o-mini",  # 使用 OpenAI 官方模型
         messages=[
             {"role": "system", "content": "You are an excellent assistant generating article summaries."},
             {"role": "user", "content": f"{prompt}\n\nArticle content:\n{content}"},
         ],
+        stream=False,
     )
     return response.choices[0].message.content
 
