@@ -143,7 +143,8 @@ def process_markdown_file(file_path: Path):
 
     # 创建新的文件夹结构
     date = new_metadata['date']
-    new_folder = BASE_DIR / f"{date[0:4]}/{date[5:7]}/{date[8:10]}/{create_slug(new_metadata['title'])}"
+    # new_folder = BASE_DIR / f"{date[0:4]}/{date[5:7]}/{date[8:10]}/{create_slug(new_metadata['title'])}"
+    new_folder = BASE_DIR / f"{date.year}/{date.month:02d}/{date.day:02d}/{create_slug(new_metadata['title'])}"
     new_folder.mkdir(parents=True, exist_ok=True)
 
     # 移动并重命名文件
