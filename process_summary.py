@@ -143,8 +143,17 @@ def process_markdown_file(file_path: Path):
 
     # 创建新的文件夹结构
     date = new_metadata['date']
-    print(f"date: {date}, type: {type(date)}")
-    new_folder = BASE_DIR / f"{date[0:4]}/{date[5:7]}/{date[8:10]}/{create_slug(new_metadata['title'])}"
+    if isinstance(date, str):
+        # 如果是字符串，解析 ISO 格式 (如 "2025-01-25T22:37:47+08:00")
+        date_obj = datetime.fromisoformat(date)
+    elif isinstance(date, datetime):
+        # 如果已经是 datetime 对象，直接使用
+        date_obj = date
+    else:
+        raise ValueError(f"Unsupported date type: {type(date)}")
+
+    # 使用 date_obj 构建路径
+    new_folder = BASE_DIR / f"{date_obj.year}/{date_obj.month:02d}/{date_obj.day:02d}/{create_slug(new_metadata['title'])}"
     # new_folder = BASE_DIR / f"{date.year}/{date.month:02d}/{date.day:02d}/{create_slug(new_metadata['title'])}"
     new_folder.mkdir(parents=True, exist_ok=True)
 
