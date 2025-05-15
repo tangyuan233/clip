@@ -13,14 +13,14 @@ extra:
 ---
 
 > **摘要**:
->  本文探讨了隐性知识在学习和掌握专业领域中的重要性，强调了仅靠阅读文献和理论教学无法完全获得专业知识。作者借助实例讨论了隐性知识的不同类型，包括显性公共知识、私人显性知识和隐性知识。文章指出，能够与专家交流获取私人显性知识虽然重要，但大型文献和案例分析能帮助我们更深刻地理解领域中的复杂性。隐性知识无法通过传统教学来传授，而是需要通过观察、模仿和实践来获得。有效的学习应该包括大量的示例和互动，以促进知识的深层次理解和应用。对于希望加速学习过程的领域，创建并利用专家表演的材料库，结合情境中的大量示例，将有助于提升学习效率并促进知识的传播。
+>  本文探讨了隐性知识的概念及其在专业领域内的传递与扩展。作者引用 P.B. 梅达沃的观点，强调研究重要问题的重要性，并通过多个例子阐述隐性知识如何通过与专家的互动和个人经验获得。单纯的纸面知识无法替代实践经验，尤其是在复杂专业领域。作者还讨论了在学习过程中交流与实例的价值，指出有效的学习方式应通过观看专家的表现，结合书面材料和积极的参与。文章最后总结隐性知识无法直接传授，需通过适当的渠道如视频、模拟和案例研究等方法来学习和扩展。
 > 
 >  **要点总结**:
->  1. 隐性知识是专业技能的重要组成部分，无法通过传统方式直接传授。
->  2. 学习与专家交流的能力有助于获得私人显性知识，但阅读大量文献同样不可或缺。
->  3. 在学习过程中，情境相关的示例和专家表演的材料能有效加速知识的获取。
->  4. 通过观察专家的工作方式、介绍和互动实践，可以更深入理解复杂领域。
->  5. 结合丰富的例子和实际操作，设计有效的学习系统是加速掌握专业知识的关键。
+>  1. 隐性知识是真实存在且通过实践与经验获取，通常难以通过书面方式教授。
+>  2. 与专家的交流可以帮助获取私有显性知识，而这种知识的私密性使得扩展存在挑战。
+>  3. 学习一个领域不仅需熟悉公开文献，还需深入理解执行层面所需的隐性知识。
+>  4. 视频与示范是有效学习隐性知识的一种方法，能够比传统的阅读更好地传达复杂技能。
+>  5. 在科学管理中，拥有相关领域的经验虽重要，但较高的管理者应具备多方面的知识背景以利于项目推动。
 
 ---
 
@@ -37,7 +37,7 @@ As someone who's an example of being in that inner loop, I thought it'd be worth
 Ben is not the only one with a person-first approach to learning: In the same Twitter thread, Alexey Guzey [joins](https://twitter.com/ArtirKel/status/1446187172873179139) Ben with a 90/10 split between talking to people and reading. This is not due to some limitation with the written vs verbal form. There are some people out there like Rob [Wiblin](https://medium.com/@robertwiblin/have-the-attention-span-of-a-goldfish-heres-how-to-read-long-things-761bcec9f2dc) that find it hard to read anything at all. Ben and Alexey's point is very different: Is there knowledge that can only be gained by talking to the experts? Is it faster to gain certain kinds of knowledge by talking to the experts?  
 本不是唯一一个采用以人为本的学习方法的人：在同样的 Twitter 帖子中，Alexey Guzey 与 Ben 一起，以 90/10 的比例在与人交谈和阅读之间分配时间。这并非由于书面形式与口头形式的某些限制。有些人，比如 Rob Wiblin，发现阅读任何东西都很困难。Ben 和 Alexey 的观点非常不同：是否只有通过与专家交谈才能获得某些知识？通过与专家交谈是否可以更快地获得某些类型的知识？
 
-![image-20211206154513101](https://nintil.com/images/2021-10-07-on-tacit-knowledge-in-science/image-20211206154513101.png)
+![image-20211206154513101](image-20211206154513101.png)
 
 Ben Reinhardt doing research  
 本·雷因哈特进行研究
