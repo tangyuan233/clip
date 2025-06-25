@@ -2,6 +2,7 @@
 import * as fs from "https://deno.land/std@0.159.0/fs/mod.ts";
 import { extract } from "https://deno.land/std@0.159.0/encoding/front_matter.ts";
 import { DateTimeFormatter } from "https://deno.land/std@0.159.0/datetime/formatter.ts";
+import { copy } from "https://deno.land/std@0.180.0/fs/copy.ts";
 import * as path from "https://deno.land/std@0.159.0/path/mod.ts";
 import { Feed, FeedOptions } from "https://esm.sh/feed@4.2.2";
 import {
@@ -22,7 +23,7 @@ import { gfm } from "https://esm.sh/micromark-extension-gfm@2.0.1";
 import {
   gfmFromMarkdown,
   gfmToMarkdown,
-} from "https://esm.sh/mdast-util-gfm@2.0.1";
+} from "https://esm.sh/mdast-util-gfm@2.0.2";
 // import { default as kebabCase } from "https://jspm.dev/lodash@4.17.21/kebabCase";
 import { toMarkdown } from "https://esm.sh/mdast-util-to-markdown@1.5.0";
 import { fromMarkdown } from "https://esm.sh/mdast-util-from-markdown@1.3.0";
@@ -391,6 +392,7 @@ async function main() {
     // write to file
     const targetMarkdownFiles: Record<string, string> = {};
     const allFiles: string[] = [];
+    let allPosts: Post[] = [];
     for (const chapter of chapters) {
       let markdownContent = `# ${chapter.title}\n\n`;
       // if title is not the same as original title
@@ -520,34 +522,31 @@ async function main() {
     // for archive book gropu by year and month
     if (key === "archive") {
       const groups = groupBy(chapters, (chapter: Chapter) => {
-        return formatBeijing(chapter.date, "yyyyMMdd");
+        return formatBeijing(chapter.date, "yyyyMM");
       });
-      const days = Object.keys(groups).sort((a, b) => {
+      const months = Object.keys(groups).sort((a, b) => {
         return parseInt(b) - parseInt(a);
       });
-      for (const day of days) {
-        // split 4,2
-        const yearStr = day.slice(0, 4);
-        const monthStr = day.slice(4, 6);
-        const dayStr = day.slice(6, 8);
-        const daySummaryPath = `${yearStr}/${monthStr}/${dayStr}/index.md`;
+      for (const month of months) {
+        const yearStr = month.slice(0, 4);
+        const monthStr = month.slice(4, 6);
+        const monthSummaryPath = `${yearStr}/${monthStr}/index.md`;
         book.summary.push({
-          title: yearStr + "-" + monthStr + "-" + dayStr,
-          path: daySummaryPath,
-          subSections: groups[day].map((chapter: Chapter) => {
+          title: `${yearStr}-${monthStr}`,
+          path: monthSummaryPath,
+          subSections: groups[month].map((chapter: Chapter) => {
             const relativePathToSummary = chapter.relativePath.replace(
               /^content\//,
               "",
             );
             const relativePathToSection = path.relative(
-              path.dirname(daySummaryPath),
+              path.dirname(monthSummaryPath),
               relativePathToSummary,
             );
             const source = chapter.frontMatter?.extra?.source;
-
             const originalTitle = chapter.frontMatter?.extra?.original_title;
             return {
-              title: chapter.title,
+              title: `${formatBeijing(chapter.date, "yyyy-MM-dd")}-${chapter.title}`,
               path: relativePathToSummary,
               relativePathToSection,
               source,
@@ -629,6 +628,7 @@ async function main() {
         "README.md",
       );
       await fs.ensureDir(path.dirname(assetDistPath));
+
       await Deno.copyFile(rootReadmePath, assetDistPath);
     }
 
@@ -699,12 +699,65 @@ ${body}
       }
     }
 
+    // add table of content to index
+    const indexContent = await Deno.readTextFile(
+      path.join(
+        bookSourceFileDist,
+        bookConfig.book.src as string,
+        "README.md",
+      ),
+    );
+
+    if (indexContent.includes("<!-- Table of Content-->")) {
+      // replace it
+      let tableOfContent = ``;
+
+      for (const chapter of allChapters) {
+        const urlPathname = chapter.relativePath.replace(/^content\//, "");
+        tableOfContent +=
+          `- ${chapter.day} [${chapter.title}](${urlPathname})\n`;
+      }
+      // replace it with table of content
+      const newContent = indexContent.replace(
+        "<!-- Table of Content-->",
+        tableOfContent,
+      );
+      await Deno.writeTextFile(
+        path.join(
+          bookSourceFileDist,
+          bookConfig.book.src as string,
+          "README.md",
+        ),
+        newContent,
+      );
+    }
+
     // write book.toml
     const bookToml = stringify(
       book.config as unknown as Record<string, unknown>,
     );
     const bookTomlPath = path.join(bookSourceFileDist, "book.toml");
     await Deno.writeTextFile(bookTomlPath, bookToml);
+
+    // copy static file to dist if it exists
+    const staticPath = path.join(workDir, "static");
+    const staticDistPath = path.join(bookSourceFileDist);
+
+    try {
+      const staticStat = await Deno.lstat(staticPath);
+      if (staticStat.isDirectory) {
+        await copy(staticPath, staticDistPath, {
+          overwrite: true,
+        });
+        console.log("Static files copied successfully.");
+      }
+    } catch (error) {
+      if (error instanceof Deno.errors.NotFound) {
+        console.log("Static directory not found. Skipping static file copy.");
+      } else {
+        console.error("Error while copying static files:", error);
+      }
+    }
     console.log(`build book ${key} source files success`);
     const p = Deno.run({
       cmd: ["../../bin/mdbook", "build"],
