@@ -1,6 +1,8 @@
 ---
 title: 21 Lessons From 14 Years at Google
+original_title: 21 Lessons From 14 Years at Google
 source: https://addyosmani.com/blog/21-lessons/
+hostname: addyosmani.com
 author:
   - "[[Addy Osmani]]"
 published: 2026-01-03
