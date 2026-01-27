@@ -85,13 +85,13 @@ def generate_summary_and_points(content: str) -> str:
 
 # Function to process YAML metadata
 def process_metadata(metadata):
-    date = metadata['date']
+    date = metadata['created']
     slug = create_slug(metadata['title'])
     
     new_metadata = {
         'title': metadata['title'],
-        'date': metadata['published'],
-        'updated': metadata['created'],
+        'date': metadata['created'],
+        'updated': metadata['published'],
         'taxonomies': {
             'tags': metadata.get('tags', [])
         },
