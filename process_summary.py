@@ -13,7 +13,7 @@ from pathlib import Path
 
 # Configuration
 BASE_DIR = Path("content")
-INBOX_DIR = "inbox/48 Clippings"
+INBOX_DIR = "inbox/Clippings"
 openai.api_key = os.environ.get('OPENAI_API_KEY')  # 从环境变量中获取 OpenAI API 密钥
 
 # Function to check if a string contains Chinese characters
@@ -90,8 +90,8 @@ def process_metadata(metadata):
     
     new_metadata = {
         'title': metadata['title'],
-        'date': metadata['date'],
-        'updated': metadata['updated'],
+        'date': metadata['published'],
+        'updated': metadata['created'],
         'taxonomies': {
             'tags': metadata.get('tags', [])
         },
