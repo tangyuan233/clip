@@ -4,7 +4,7 @@ import openai  # 使用 OpenAI 兼容库
 import frontmatter
 import yaml
 import datetime
-from datetime import datetime
+from datetime import datetime, date as date_only
 import urllib.request
 import unicodedata
 import slugify
@@ -150,6 +150,9 @@ def process_markdown_file(file_path: Path):
     elif isinstance(date, datetime):
         # 如果已经是 datetime 对象，直接使用
         date_obj = date
+    elif isinstance(date, date_only):
+        # YAML 把不带时间的日期（如 "2025-01-25"）解析成 date 而非 datetime
+        date_obj = datetime(date.year, date.month, date.day)
     else:
         raise ValueError(f"Unsupported date type: {type(date)}")
 
