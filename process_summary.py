@@ -1,5 +1,6 @@
 import os
 import re
+import json
 import openai  # 使用 OpenAI 兼容库
 import frontmatter
 import yaml
@@ -39,50 +40,59 @@ def serialize_datetime(obj):
 def create_slug(title):
     return slugify.slugify(title, separator="-", lowercase=True)
 
-# Function to generate summary and key points using DeepSeek's model
-def generate_summary_and_points(content: str) -> str:
+# Function to parse the model's JSON response, tolerating stray code fences
+def _parse_summary_json(text: str) -> dict:
+    text = text.strip()
+    if text.startswith("```"):
+        text = text.strip("`")
+        if text.lower().startswith("json"):
+            text = text[4:]
+        text = text.strip()
+    return json.loads(text)
+
+# Function to generate summary, key points and a one-line verdict using DeepSeek's model
+def generate_summary_and_points(content: str) -> dict:
     prompt = """
-    ## Goals:
-    - 第一步，仔细阅读文章内容。
-    - 第二步，对每个段落进行总结，总结文章的主要内容，理清楚作者表达了什么观点、作者解决了哪些具体的问题。
-    - 第三步，文章要点总结。根据原文内容，提炼出文章的5个以内的主要观点或作者解决的问题。
-    - 第四步，根据上面三步，按照指定的输出格式，整理出文章内容的总结。
+    你是一个帮我整理"稍后阅读"文章存档的助手。请仔细阅读下面的文章正文，只输出一段 JSON，不要输出任何 JSON 之外的文字、解释或代码块标记。
 
-    ## Skills:
-    - 善于用流畅通顺的简体中文总结内容重点。
-    - 具有良好的逻辑思维能力，能够深入分析文章内容。
-    - 掌握文章相关领域的专业知识，能够准确理解和阐述专业概念。
-    - 擅长以通俗易懂的方式解释复杂的专业内容。
+    JSON 需要包含以下字段：
 
-    ## Constraints:
-    - 文章内容总结的{摘要}字数控制在380个中文汉字以内。
+    - "summary": 一段中文摘要，控制在 380 个汉字以内，不分段，完整传达文章的核心内容、作者表达的主要观点以及解决的问题。
+    - "key_points": 一个字符串数组，列出文章真正重要的核心论点或结论。数量由文章实际内容决定，通常 3-6 条即可，不要为了凑数量而拆分、注水或重复表达，也不要遗漏关键内容；如果文章本身观点很少，给 2-3 条也完全可以。每条尽量简洁、有信息量，避免空泛的套话。
+    - "worth_reading": 一句话（不超过 40 字），帮我判断这篇文章适合什么样的人读、值不值得展开精读原文，而不是重复摘要内容。
+
+    ## 约束：
     - 尽可能还原文章中的专业词汇，并对其进行通俗解释。
-    - 在总结的过程中，完全按照文章作者的表达内容进行整理，不添加你的额外观点。
-    - 所有输出用中文生成。
+    - 完全按照文章作者表达的内容进行整理，不要添加你自己的观点。
+    - 所有输出使用简体中文。
     - 文章内容里的"我"是文章的原作者，不要代入 TangYuan 的身份。
-    - 按照outputformat指定的格式输出最终内容。
-    - “摘要”和“要点总结”使用Markdown callout语法。
-    - 最终生成的内容只包括“摘要”和“要点总结”两个部分，“要点总结”部分严格按照有序列表生成。
-    - 不要在“摘要”和“要点总结”的部分之外增加额外的总结和你的想法。
-    - “摘要”的内容不要分段，保持一个段落。
-
-    ## OutputFormat:
-    > **摘要**:
-    > {摘要}
-    > 
-    > **要点总结**:
-    > {要点总结}
     """
-    
+
     response = openai.ChatCompletion.create(
         model="deepseek-chat",  # 使用 DeepSeek 模型
         messages=[
-            {"role": "system", "content": "You are an excellent assistant generating article summaries."},
-            {"role": "user", "content": f"{prompt}\n\nArticle content:\n{content}"},
+            {
+                "role": "system",
+                "content": "You are an excellent assistant generating article summaries. Always respond with a single JSON object and nothing else.",
+            },
+            {"role": "user", "content": f"{prompt}\n\n文章内容:\n{content}"},
         ],
+        response_format={"type": "json_object"},
         stream=False,
     )
-    return response.choices[0].message.content
+    return _parse_summary_json(response.choices[0].message.content)
+
+# Function to render the summary JSON as the markdown callout block used at the top of each page
+def format_summary_block(summary_data: dict) -> str:
+    lines = ["> **摘要**:", f"> {summary_data['summary']}", "> "]
+    lines.append("> **要点总结**:")
+    for index, point in enumerate(summary_data.get('key_points', []), start=1):
+        lines.append(f"> {index}. {point}")
+    worth_reading = summary_data.get('worth_reading')
+    if worth_reading:
+        lines.append("> ")
+        lines.append(f"> **值得读吗**: {worth_reading}")
+    return "\n".join(lines)
 
 # Function to process YAML metadata
 def process_metadata(metadata):
@@ -162,18 +172,18 @@ def process_markdown_file(file_path: Path):
     else:
         raise ValueError(f"Unsupported date type: {type(date)}")
 
+    # 先生成摘要，成功后再落盘，避免摘要生成失败时在 content/ 里留下
+    # 一个 frontmatter 不对、也没有摘要的半成品页面
+    summary_data = generate_summary_and_points(content)
+    summary_block = format_summary_block(summary_data)
+
     # 使用 date_obj 构建路径
     new_folder = BASE_DIR / f"{date_obj.year}/{date_obj.month:02d}/{date_obj.day:02d}/{create_slug(new_metadata['title'])}"
-    # new_folder = BASE_DIR / f"{date.year}/{date.month:02d}/{date.day:02d}/{create_slug(new_metadata['title'])}"
     new_folder.mkdir(parents=True, exist_ok=True)
 
     # 移动并重命名文件
     new_file_path = new_folder / "index.md"
     shutil.copy2(str(file_path), str(new_file_path))  # 使用 copy2 保持原有元数据
-
-    # 生成摘要和要点
-    summary_and_points = generate_summary_and_points(content)
-    summary_and_points = summary_and_points.replace("\n", "\n> ").replace("> >", '> ')
 
     # 下载图片并更新 Markdown 中的引用
     with open(new_file_path, 'r+', encoding='utf-8') as f:
@@ -185,7 +195,7 @@ def process_markdown_file(file_path: Path):
             content_without_yaml = content
         new_content = download_images_and_update_refs(content_without_yaml, new_folder)
         f.seek(0)
-        f.write(f"---\n{yaml_frontmatter}---\n\n{summary_and_points}\n\n---\n\n{new_content}")
+        f.write(f"---\n{yaml_frontmatter}---\n\n{summary_block}\n\n---\n\n{new_content}")
         f.truncate()
 
 # Function to process all Markdown files in the inbox

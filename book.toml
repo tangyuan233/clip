@@ -11,7 +11,7 @@ git-repository-url = "https://github.com/theowenyoung/clip-template"
 edit-url-template = "https://github.com/theowenyoung/clip-template/edit/main/{path}"
 
 [output.html.search]
-enable = false
+enable = true
 
 [output.markdown]
 enable = true
