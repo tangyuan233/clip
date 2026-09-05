@@ -50,7 +50,7 @@ def _parse_summary_json(text: str) -> dict:
         text = text.strip()
     return json.loads(text)
 
-# Function to generate summary, key points and a one-line verdict using DeepSeek's model
+# Function to generate summary, key points and a bias/reliability check using DeepSeek's model
 def generate_summary_and_points(content: str) -> dict:
     prompt = """
     你是一个帮我整理"稍后阅读"文章存档的助手。请仔细阅读下面的文章正文，只输出一段 JSON，不要输出任何 JSON 之外的文字、解释或代码块标记。
@@ -59,11 +59,11 @@ def generate_summary_and_points(content: str) -> dict:
 
     - "summary": 一段中文摘要，控制在 380 个汉字以内，不分段，完整传达文章的核心内容、作者表达的主要观点以及解决的问题。
     - "key_points": 一个字符串数组，列出文章真正重要的核心论点或结论。数量由文章实际内容决定，通常 3-6 条即可，不要为了凑数量而拆分、注水或重复表达，也不要遗漏关键内容；如果文章本身观点很少，给 2-3 条也完全可以。每条尽量简洁、有信息量，避免空泛的套话。
-    - "worth_reading": 一句话（不超过 40 字），帮我判断这篇文章适合什么样的人读、值不值得展开精读原文，而不是重复摘要内容。
+    - "bias_check": 一到两句中文点评，扮演一个媒体素养/事实核查的角色，判断文章整体上更偏向客观事实陈述，还是带有明显个人观点、情绪化或片面倾向的表达。如果发现明显带情绪、片面或带说服意图的措辞，指出具体属于哪一类（例如：使用绝对化字眼、只呈现单方立场、诉诸恐惧或愤怒、以偏概全等），并尽量从原文摘录一个有代表性的短语作为例子；如果文章整体克制、论证平衡、没有明显问题，直接回答"未见明显情绪化或片面表达"，不要为了显得有内容而牵强找茬。
 
     ## 约束：
     - 尽可能还原文章中的专业词汇，并对其进行通俗解释。
-    - 完全按照文章作者表达的内容进行整理，不要添加你自己的观点。
+    - "summary" 和 "key_points" 必须完全按照文章作者表达的内容进行整理，不要添加你自己的观点；"bias_check" 是唯一允许你做出自己判断的字段。
     - 所有输出使用简体中文。
     - 文章内容里的"我"是文章的原作者，不要代入 TangYuan 的身份。
     """
@@ -88,10 +88,10 @@ def format_summary_block(summary_data: dict) -> str:
     lines.append("> **要点总结**:")
     for index, point in enumerate(summary_data.get('key_points', []), start=1):
         lines.append(f"> {index}. {point}")
-    worth_reading = summary_data.get('worth_reading')
-    if worth_reading:
+    bias_check = summary_data.get('bias_check')
+    if bias_check:
         lines.append("> ")
-        lines.append(f"> **值得读吗**: {worth_reading}")
+        lines.append(f"> **客观性检查**: {bias_check}")
     return "\n".join(lines)
 
 # Function to process YAML metadata
