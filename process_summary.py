@@ -1,10 +1,10 @@
 import os
 import re
-import openai  # 使用 OpenAI 官方库
+import openai  # 使用 OpenAI 兼容库
 import frontmatter
 import yaml
 import datetime
-from datetime import datetime
+from datetime import datetime, date as date_only
 import urllib.request
 import unicodedata
 import slugify
@@ -14,12 +14,13 @@ from pathlib import Path
 # Configuration
 BASE_DIR = Path("content")
 INBOX_DIR = "inbox/Clippings"
-openai.api_key = os.environ.get('OPENAI_API_KEY')  # 从环境变量中获取 OpenAI API 密钥
+openai.api_key = os.environ.get('DEEPSEEK_API_KEY')  # 从环境变量中获取 DeepSeek API 密钥
+openai.api_base = "https://api.deepseek.com/v1"
 
 # Function to check if a string contains Chinese characters
 def is_chinese(title):
     for char in title:
-        if '一' <= char <= '\u9fff':  # 基本的中文字符范围判断
+        if '一' <= char <= '鿿':  # 基本的中文字符范围判断
             return True
     return False
 
@@ -38,7 +39,7 @@ def serialize_datetime(obj):
 def create_slug(title):
     return slugify.slugify(title, separator="-", lowercase=True)
 
-# Function to generate summary and key points using OpenAI's model
+# Function to generate summary and key points using DeepSeek's model
 def generate_summary_and_points(content: str) -> str:
     prompt = """
     ## Goals:
@@ -74,7 +75,7 @@ def generate_summary_and_points(content: str) -> str:
     """
     
     response = openai.ChatCompletion.create(
-        model="gpt-4o-mini",  # 使用 OpenAI 官方模型
+        model="deepseek-chat",  # 使用 DeepSeek 模型
         messages=[
             {"role": "system", "content": "You are an excellent assistant generating article summaries."},
             {"role": "user", "content": f"{prompt}\n\nArticle content:\n{content}"},
@@ -149,6 +150,9 @@ def process_markdown_file(file_path: Path):
     elif isinstance(date, datetime):
         # 如果已经是 datetime 对象，直接使用
         date_obj = date
+    elif isinstance(date, date_only):
+        # YAML 把不带时间的日期（如 "2025-01-25"）解析成 date 而非 datetime
+        date_obj = datetime(date.year, date.month, date.day)
     else:
         raise ValueError(f"Unsupported date type: {type(date)}")
 
