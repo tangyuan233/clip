@@ -15,19 +15,6 @@ extra:
   original_lang: en
 ---
 
-> **摘要**:
->  作者结合在谷歌约14年的经验，分享了21条职业感悟，核心观点是：在大型科技公司，仅会写代码远不够，能驾驭代码之外的人事、政治与模糊性才是关键。作者认为，最有价值的工程师应痴迷于解决用户问题，而非迷恋技术本身。工作中，与人达成共识比单纯正确更重要，应保持“坚定观点、柔和管理”。行动优先于追求完美，清晰代码优于炫技。技术选型应谨慎克制，必要时才创新。此外，要认识到被删除的代码是好代码、需正视“兼容性即产品”等理念。他提出的应对策略包括：解决团队缓慢的核心是纠正对齐问题而非加速执行、聚焦可控之事、警惕指标被滥用、承认“不知道”能营造安全氛围。最终强调，应重视人际网络、有意识做“胶水工作”（指协调沟通类事务性辅助工作）并平衡个人成长，因为职业生涯是长期复合增长，而非短期冲刺。
->  
->  **要点总结**:
->  1. 工程师的核心价值在于深刻理解并解决用户问题，而非推广自身偏爱的技术方案。
->  2. 成功依赖团队共识与协作。保持谦逊、积极行动、优先保证代码清晰易懂，并克制技术创新的冲动。
->  3. 在大型组织中，主动沟通、清晰阐述自身贡献（即让工作“可见”）同实际工作本身一样重要。
->  4. 项目缓慢通常是团队目标或方向不统一所致，问题根源多在协调与对齐，而非个人执行力不足。
->  5. 长期职业发展依靠人际网络与人品的复利效应，需警惕工作指标被“玩坏”，并有意识地管理“胶水工作”，以促进持续成长。
-
----
-
-
 When I joined Google ~14 years ago, I thought the job was about writing great code. I was partly right. But the longer I’ve stayed, the more I’ve realized that the engineers who thrive aren’t necessarily the best programmers - they’re the ones who’ve figured out how to navigate everything around the code: the people, the politics, the alignment, the ambiguity.
 
 These lessons are what I wish I’d known earlier. Some would have saved me months of frustration. Others took years to fully understand. None of them are about specific technologies - those change too fast to matter. They’re about the patterns that keep showing up, project after project, team after team.
