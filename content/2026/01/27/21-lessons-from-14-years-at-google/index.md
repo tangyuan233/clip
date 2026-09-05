@@ -15,19 +15,6 @@ extra:
   original_lang: en
 ---
 
-> **摘要**:
->  作者以在谷歌约14年的经验，分享了21条工程师生涯中重要的非技术性教训。他认识到，能在大型组织中成功的工程师并非最好的程序员，而是擅长处理人员、政治、协调和模糊性的人。核心理念包括：痴迷于解决用户问题而非技术本身；关键不在于“正确”而在于共同达成正确；偏向行动，先做再完善；清晰优于聪明；技术选择需谨慎，创新预算有限。作者还强调，代码沉默不语，工程师需让自身影响力可见；最好的代码是无需编写的代码；规模效应下，缺陷也成为依赖；团队缓慢往往是协调失败而非执行问题。此外，他还涉及聚焦可控事务、理解抽象层是延迟而非消除复杂性、写作与教学促进思维清晰、警惕无意识“胶水工作”对职业轨迹的影响等见解。作者总结道，这些经验可归结为持续好奇、保持谦逊，并记住工作始终关乎人——服务的用户和协作的同事。
-> 
->  **要点总结**:
->  1. 解决问题导向优先于技术迷恋，成功源于对用户需求的深度理解。
->  2. 团队协同达成正确共识远比个人正确更重要，强势作风会积累隐性阻力。
->  3. 行动优于完美，迭代进步胜过分析瘫痪。
->  4. 代码的清晰度和可维护性价值胜过技术巧妙性。
->  5. 个人人际网络与可见的影响力是职业长期发展的关键资产。
-
----
-
-
 When I joined Google ~14 years ago, I thought the job was about writing great code. I was partly right. But the longer I’ve stayed, the more I’ve realized that the engineers who thrive aren’t necessarily the best programmers - they’re the ones who’ve figured out how to navigate everything around the code: the people, the politics, the alignment, the ambiguity.
 
 These lessons are what I wish I’d known earlier. Some would have saved me months of frustration. Others took years to fully understand. None of them are about specific technologies - those change too fast to matter. They’re about the patterns that keep showing up, project after project, team after team.

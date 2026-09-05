@@ -1,6 +1,9 @@
 name: Process Markdown Files
 
-on: push
+on:
+  push:
+    branches:
+      - main
 
 jobs:
   process-markdown:
