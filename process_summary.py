@@ -86,24 +86,27 @@ def generate_summary_and_points(content: str) -> str:
 
 # Function to process YAML metadata
 def process_metadata(metadata):
-    # 部分旧笔记只有 Dataview 内联字段（author:: ...），没有真正的 YAML
-    # frontmatter，此时 metadata 为空字典，缺少必需字段。
-    if 'title' not in metadata or 'created' not in metadata:
-        raise KeyError("Missing required frontmatter fields: 'title' and/or 'created'")
+    # 不同来源的 clipping frontmatter 字段名不完全一致：新版用
+    # created/published，另一些版本直接用 date/updated。两者都接受。
+    title = metadata.get('title')
+    created = metadata.get('created', metadata.get('date'))
+    if not title or not created:
+        raise KeyError("Missing required frontmatter fields: 'title' and/or 'created'/'date'")
+    published = metadata.get('published', metadata.get('updated', created))
 
     new_metadata = {
-        'title': metadata['title'],
-        'date': metadata['created'],
-        'updated': metadata.get('published', metadata['created']),
+        'title': title,
+        'date': created,
+        'updated': published,
         'taxonomies': {
-            'tags': metadata.get('tags', [])
+            'tags': metadata.get('tags') or []
         },
         'extra': {
             'source': metadata.get('source', ''),
             'hostname': metadata.get('hostname', ''),
             'author': metadata.get('author', ''),
-            'original_title': metadata.get('original_title', metadata['title']),
-            'original_lang': 'zh' if is_chinese(metadata['title']) else 'en'
+            'original_title': metadata.get('original_title', title),
+            'original_lang': 'zh' if is_chinese(title) else 'en'
         }
     }
     return new_metadata
