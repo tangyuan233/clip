@@ -86,13 +86,15 @@ def generate_summary_and_points(content: str) -> str:
 
 # Function to process YAML metadata
 def process_metadata(metadata):
-    date = metadata['created']
-    slug = create_slug(metadata['title'])
-    
+    # 部分旧笔记只有 Dataview 内联字段（author:: ...），没有真正的 YAML
+    # frontmatter，此时 metadata 为空字典，缺少必需字段。
+    if 'title' not in metadata or 'created' not in metadata:
+        raise KeyError("Missing required frontmatter fields: 'title' and/or 'created'")
+
     new_metadata = {
         'title': metadata['title'],
         'date': metadata['created'],
-        'updated': metadata['published'],
+        'updated': metadata.get('published', metadata['created']),
         'taxonomies': {
             'tags': metadata.get('tags', [])
         },
@@ -185,7 +187,10 @@ def process_markdown_file(file_path: Path):
 # Function to process all Markdown files in the inbox
 def process_markdown_files():
     for file in Path(INBOX_DIR).glob("*.md"):
-        process_markdown_file(file)
+        try:
+            process_markdown_file(file)
+        except Exception as e:
+            print(f"Skipping {file} due to error: {e}")
 
 # Main execution
 if __name__ == "__main__":
