@@ -136,7 +136,8 @@ def process_markdown_file(file_path: Path):
     for existing_file in existing_files:
         with open(existing_file, 'r', encoding='utf-8') as ef:
             existing_post = frontmatter.load(ef)
-            if existing_post.get('title') == post.get('title') and existing_post.get('author') == post.get('author'):
+            existing_author = existing_post.get('extra', {}).get('author')
+            if existing_post.get('title') == post.get('title') and existing_author == post.get('author'):
                 print(f"Skipping file as it already exists with same title and author: {file_path}")
                 return
 
