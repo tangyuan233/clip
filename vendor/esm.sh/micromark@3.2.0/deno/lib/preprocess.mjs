@@ -1,0 +1,3 @@
+/* esm.sh - micromark@3.2.0/lib/preprocess */
+var d=/[\0\t\n\r]/g;function x(){let i=1,c="",u=!0,r;return p;function p(n,l,a){let e=[],h,o,t,s,f;for(n=c+n.toString(l),t=0,c="",u&&(n.charCodeAt(0)===65279&&t++,u=void 0);t<n.length;){if(d.lastIndex=t,h=d.exec(n),s=h&&h.index!==void 0?h.index:n.length,f=n.charCodeAt(s),!h){c=n.slice(t);break}if(f===10&&t===s&&r)e.push(-3),r=void 0;else switch(r&&(e.push(-5),r=void 0),t<s&&(e.push(n.slice(t,s)),i+=s-t),f){case 0:{e.push(65533),i++;break}case 9:{for(o=Math.ceil(i/4)*4,e.push(-2);i++<o;)e.push(-1);break}case 10:{e.push(-4),i=1;break}default:r=!0,i=1}t=s+1}return a&&(r&&e.push(-5),c&&e.push(c),e.push(null)),e}}export{x as preprocess};
+//# sourceMappingURL=preprocess.mjs.map

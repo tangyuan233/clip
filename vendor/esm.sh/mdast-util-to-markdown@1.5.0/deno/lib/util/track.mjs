@@ -1,0 +1,3 @@
+/* esm.sh - mdast-util-to-markdown@1.5.0/lib/util/track */
+function a(h){let l=h||{},c=l.now||{},t=l.lineShift||0,i=c.line||1,e=c.column||1;return{move:g,current:s,shift:f};function s(){return{now:{line:i,column:e},lineShift:t}}function f(o){t+=o}function g(o){let r=o||"",n=r.split(/\r?\n|\r/g),u=n[n.length-1];return i+=n.length-1,e=n.length===1?e+u.length:1+u.length+t,r}}export{a as track};
+//# sourceMappingURL=track.mjs.map
