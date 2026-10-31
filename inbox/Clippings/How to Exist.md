@@ -1,12 +1,12 @@
 ---
-title: "How to Exist"
-date: "2026-09-05T22:37:16+08:00"
-updated: "2026-07-31T18:32:34+08:00"
+title: How to Exist
+date: 2026-09-05T22:37:16+08:00
+updated: 2026-07-31T18:32:34+08:00
 tags:
-source: "https://www.raptitude.com/2026/07/how-to-exist/"
-hostname: "raptitude.com"
-author: "David Cain"
-original_title: "How to Exist"
+source: https://www.raptitude.com/2026/07/how-to-exist/
+hostname: raptitude.com
+author: David Cain
+original_title: How to Exist
 ---
 Here’s an experiment for a true daredevil.
 
