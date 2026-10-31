@@ -1,0 +1,4 @@
+/* esm.sh - mdast-util-to-markdown@1.5.0/lib/util/container-phrasing */
+function p(a,r,i){let o=r.indexStack,c=a.children||[],e=[],n=-1,t=i.before;o.push(-1);let h=r.createTracker(i);for(;++n<c.length;){let g=c[n],d;if(o[o.length-1]=n,n+1<c.length){let l=r.handle.handlers[c[n+1].type];l&&l.peek&&(l=l.peek),d=l?l(c[n+1],a,r,{before:"",after:"",...h.current()}).charAt(0):""}else d=i.after;e.length>0&&(t==="\r"||t===`
+`)&&g.type==="html"&&(e[e.length-1]=e[e.length-1].replace(/(\r?\n|\r)$/," "),t=" ",h=r.createTracker(i),h.move(e.join(""))),e.push(h.move(r.handle(g,a,r,{...h.current(),before:t,after:d}))),t=e[e.length-1].slice(-1)}return o.pop(),e.join("")}export{p as containerPhrasing};
+//# sourceMappingURL=container-phrasing.mjs.map
